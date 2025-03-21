@@ -3,8 +3,8 @@ name: Convert Markdown to HTML
 on:
   push:
     paths:
-      - '**.md'  # Run the workflow when any Markdown file is updated
-  workflow_dispatch: # Allow manual runs
+      - 'docs/**/*.md'  # Only trigger when Markdown files in 'docs/' are modified
+  workflow_dispatch:
 
 jobs:
   convert:

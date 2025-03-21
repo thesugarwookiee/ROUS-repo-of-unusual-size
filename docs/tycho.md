@@ -10,5 +10,4 @@ This is a list
 * list!!!
 
 |Hi|how are you|
-----------------
 |cowboys|are kool|

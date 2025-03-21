@@ -1,18 +1,11 @@
-- name: Convert Markdown to HTML
-  run: |
-    mkdir -p html_output
-    for file in docs/*.md; do
-      [ -e "$file" ] || continue  # Skip if no matching files
-      pandoc -s "$file" -o "html_output/$(basename "${file%.md}.html")" --metadata title="Generated Page"
-    done
-
+name: Convert Markdown to HTML
 
 on:
   push:
     paths:
-      - 'docs/**/*.md'  # Only trigger when Markdown files in 'docs/' are modified
-  workflow_dispatch:
-  
+      - 'docs/**/*.md'  # Only trigger when Markdown files in 'docs/' change
+  workflow_dispatch:  # Allows manual triggering
+
 jobs:
   convert:
     runs-on: ubuntu-latest
@@ -27,8 +20,8 @@ jobs:
         run: |
           mkdir -p html_output
           for file in docs/*.md; do
-            [ -e "$file" ] || continue  # Skip if no matching files
-            pandoc "$file" -o "html_output/$(basename "${file%.md}.html")"
+            [ -e "$file" ] || continue  # Skip if no files match
+            pandoc -s --template=templates/template.html "$file" -o "html_output/$(basename "${file%.md}.html")"
           done
 
       - name: Commit and Push HTML files

@@ -1,4 +1,11 @@
-name: Convert Markdown to HTML
+- name: Convert Markdown to HTML
+  run: |
+    mkdir -p html_output
+    for file in docs/*.md; do
+      [ -e "$file" ] || continue  # Skip if no matching files
+      pandoc -s "$file" -o "html_output/$(basename "${file%.md}.html")" --metadata title="Generated Page"
+    done
+
 
 on:
   push:
